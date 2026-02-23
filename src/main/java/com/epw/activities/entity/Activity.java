@@ -7,24 +7,32 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "activity")
 public class Activity {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false, length = 120)
     private String title;
+
     @Column(length = 2000)
     private String description;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private ActivityStatus status = ActivityStatus.BACKLOG;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private ActivityPriority priority = ActivityPriority.MEDIUM;
+
     private LocalDate dueDate;
+
     private Instant completedAt;
+
     @Column(nullable = false, updatable = false)
     private Instant createdAt;
+    
     @Column(nullable = false)
     private Instant updatedAt;
 
