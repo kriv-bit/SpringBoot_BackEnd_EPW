@@ -38,6 +38,9 @@ public class Activity {
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reminder> reminders = new ArrayList<>();
 
+    @OneToOne(mappedBy = "activity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private ActivityDetail detail;
+
     private Instant completedAt;
 
     @Column(nullable = false, updatable = false)
@@ -147,4 +150,11 @@ public class Activity {
         this.reminders = reminders;
     }
 
+    public ActivityDetail getDetail() {
+        return detail;
+    }
+
+    public void setDetail(ActivityDetail detail) {
+        this.detail = detail;
+    }
 }

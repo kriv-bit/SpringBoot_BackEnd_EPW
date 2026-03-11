@@ -6,13 +6,17 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "reminder")
 public class Reminder {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false)
     private LocalDateTime remindAt;
+
     @Column(length = 255)
     private String note;
+
     @ManyToOne
     @JoinColumn(name = "activity_id", nullable = false)
     private Activity activity;

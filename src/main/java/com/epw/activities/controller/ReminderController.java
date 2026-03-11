@@ -3,6 +3,7 @@ package com.epw.activities.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import com.epw.activities.dto.CreateReminderRequest;
+import com.epw.activities.dto.ReminderResponse;
 import com.epw.activities.entity.Activity;
 import com.epw.activities.entity.Reminder;
 import com.epw.activities.exception.ResourceNotFoundException;
@@ -23,14 +24,25 @@ public class ReminderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Reminder create(@PathVariable Long activityId,
+    public ReminderResponse create(@PathVariable Long activityId,
             @Valid @RequestBody CreateReminderRequest request) {
+
         Activity activity = activityRepository.findById(activityId)
                 .orElseThrow(() -> new ResourceNotFoundException("Activity " + activityId + " not found"));
+
         Reminder reminder = new Reminder();
         reminder.setRemindAt(request.getRemindAt());
         reminder.setNote(request.getNote());
         reminder.setActivity(activity);
-        return reminderRepository.save(reminder);
+
+        Reminder saved = reminderRepository.save(reminder);
+
+        ReminderResponse response = new ReminderResponse();
+        response.setId(saved.getId());
+        response.setRemindAt(saved.getRemindAt());
+        response.setNote(saved.getNote());
+        response.setActivityId(activity.getId());
+
+        return response;
     }
 }
