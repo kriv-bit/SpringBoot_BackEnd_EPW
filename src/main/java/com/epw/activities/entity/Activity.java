@@ -27,6 +27,10 @@ public class Activity {
     private ActivityPriority priority = ActivityPriority.MEDIUM;
 
     private LocalDate dueDate;
+    
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     private Instant completedAt;
 
@@ -48,9 +52,7 @@ public class Activity {
         this.updatedAt = Instant.now();
     }
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+
 
     // Getters/Setters (si usas Lombok, puedes reemplazar por Getter/@Setter)
     public Long getId() {
