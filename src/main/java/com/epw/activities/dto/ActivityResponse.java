@@ -15,6 +15,8 @@ public class ActivityResponse {
     private Instant completedAt;
     private Instant createdAt;
     private Instant updatedAt;
+    private Long categoryId;
+    private String categoryName;
 
     public Long getId() {
         return id;
@@ -86,5 +88,21 @@ public class ActivityResponse {
 
     public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }

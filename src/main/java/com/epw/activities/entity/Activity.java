@@ -32,7 +32,7 @@ public class Activity {
 
     @Column(nullable = false, updatable = false)
     private Instant createdAt;
-    
+
     @Column(nullable = false)
     private Instant updatedAt;
 
@@ -47,6 +47,10 @@ public class Activity {
     void onUpdate() {
         this.updatedAt = Instant.now();
     }
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     // Getters/Setters (si usas Lombok, puedes reemplazar por Getter/@Setter)
     public Long getId() {
@@ -119,5 +123,13 @@ public class Activity {
 
     public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
