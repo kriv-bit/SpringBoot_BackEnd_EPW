@@ -32,7 +32,7 @@ public class CustomerController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@往PathVariable Long id) {
+    public void delete(@PathVariable Long id) {
         customerService.deleteById(id);
     }
 }
