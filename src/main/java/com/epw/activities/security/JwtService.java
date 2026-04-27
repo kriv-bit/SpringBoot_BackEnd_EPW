@@ -20,10 +20,11 @@ public class JwtService {
         return Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-    // Genera un token para el usuario
-    public String generateToken(String username) {
+    // Genera un token para el usuario, incluyendo el rol en los claims
+    public String generateToken(String username, String role) {
         return Jwts.builder()
             .subject(username)
+            .claim("role", role) // 👈 guardamos el rol en el token
             .issuedAt(new Date())
             .expiration(new Date(System.currentTimeMillis() + expirationMs))
             .signWith(key())
@@ -38,6 +39,16 @@ public class JwtService {
             .parseSignedClaims(token)
             .getPayload()
             .getSubject();
+    }
+
+    // Extrae el rol del token
+    public String extractRole(String token) {
+        return Jwts.parser()
+            .verifyWith(key())
+            .build()
+            .parseSignedClaims(token)
+            .getPayload()
+            .get("role", String.class);
     }
 
     // Valida si el token es correcto y no expiró

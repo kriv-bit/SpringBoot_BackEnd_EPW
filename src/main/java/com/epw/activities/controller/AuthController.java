@@ -43,8 +43,16 @@ public class AuthController {
         user.setUsername(req.getUsername());
         user.setPassword(encoder.encode(req.getPassword())); // BCrypt
         userRepo.save(user);
-        String token = jwtService.generateToken(user.getUsername());
-        return new AuthResponse(token, user.getUsername());
+        // Incluimos el rol en el token
+        String token = jwtService.generateToken(
+            user.getUsername(),
+            user.getRole().name()
+        );
+        return new AuthResponse(
+            token,
+            user.getUsername(),
+            user.getRole().name()
+        );
     }
 
     // POST /api/auth/login
@@ -56,7 +64,16 @@ public class AuthController {
                 req.getPassword()
             )
         );
-        String token = jwtService.generateToken(auth.getName());
-        return new AuthResponse(token, auth.getName());
+        // Buscamos al usuario en BD para obtener su rol real
+        AppUser user = userRepo
+            .findByUsername(auth.getName())
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        // Generamos el token con el rol incluido
+        String token = jwtService.generateToken(
+            auth.getName(),
+            user.getRole().name()
+        );
+        return new AuthResponse(token, auth.getName(), user.getRole().name());
     }
 }
