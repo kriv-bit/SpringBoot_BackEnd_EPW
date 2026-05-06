@@ -26,11 +26,14 @@ VALUES
     ('users',       'Usuarios',    1),
     ('test',        'Prueba',      1),
     ('abtme',       'About Me',    1),
+	('dashboard',   'Dashboard',   1),
+
 
     -- Customer (roleId=2) → solo customers y about me
     ('customers',   'Customers',   2),
     ('abtme',       'About Me',    2),
 
     -- Provider (roleId=3) → solo providers y about me
+	('dashboard',   'Dashboard',   3),
     ('providers',   'Providers',   3),
     ('abtme',       'About Me',    3);
