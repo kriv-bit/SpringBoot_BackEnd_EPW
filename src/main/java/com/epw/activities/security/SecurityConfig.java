@@ -39,7 +39,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth ->
                 auth
                     // Rutas públicas
-                    .requestMatchers("/api/auth/**")
+                    .requestMatchers("/api/auth/**", "/api/dashboard/summary")
                     .permitAll()
                     // Todo lo demás requiere token
                     .anyRequest()
