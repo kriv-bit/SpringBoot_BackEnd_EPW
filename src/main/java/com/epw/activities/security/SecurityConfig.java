@@ -1,7 +1,9 @@
 package com.epw.activities.security;
 
 import com.epw.activities.repository.AppUserRepository;
+import java.util.Arrays;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -23,6 +25,12 @@ import org.springframework.web.cors.*;
 public class SecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
+
+    // Orígenes permitidos para CORS. Se leen de la propiedad
+    // app.cors.allowed-origins (separados por coma), que a su vez toma su
+    // valor de la variable de entorno CORS_ALLOWED_ORIGINS.
+    @Value("${app.cors.allowed-origins}")
+    private String allowedOrigins;
 
     public SecurityConfig(JwtAuthFilter jwtAuthFilter) {
         this.jwtAuthFilter = jwtAuthFilter;
@@ -63,11 +71,15 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
-    // Permite peticiones desde el frontend React (puerto 5173)
+    // Permite peticiones desde los orígenes configurados (frontend React).
     @Bean
     public CorsConfigurationSource corsSource() {
         CorsConfiguration cfg = new CorsConfiguration();
-        cfg.setAllowedOrigins(List.of("http://localhost:5173"));
+        List<String> origins = Arrays.stream(allowedOrigins.split(","))
+            .map(String::trim)
+            .filter(o -> !o.isEmpty())
+            .toList();
+        cfg.setAllowedOrigins(origins);
         cfg.setAllowedMethods(
             List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
         );
