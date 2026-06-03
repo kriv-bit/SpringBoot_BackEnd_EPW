@@ -9,6 +9,9 @@ public class RegisterRequest {
     private String username;
 
     @NotBlank
+    private String email;
+
+    @NotBlank
     @Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
     private String password;
 
@@ -18,6 +21,14 @@ public class RegisterRequest {
 
     public void setUsername(String u) {
         this.username = u;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String e) {
+        this.email = e;
     }
 
     public String getPassword() {

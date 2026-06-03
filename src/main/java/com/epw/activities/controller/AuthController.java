@@ -39,8 +39,12 @@ public class AuthController {
         if (userRepo.findByUsername(req.getUsername()).isPresent()) {
             throw new IllegalArgumentException("Username ya existe");
         }
+        if (userRepo.findByEmail(req.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("Email ya existe");
+        }
         AppUser user = new AppUser();
         user.setUsername(req.getUsername());
+        user.setEmail(req.getEmail());
         user.setPassword(encoder.encode(req.getPassword())); // BCrypt
         userRepo.save(user);
         // Incluimos el rol en el token
@@ -51,6 +55,7 @@ public class AuthController {
         return new AuthResponse(
             token,
             user.getUsername(),
+            user.getEmail(),
             user.getRole().name()
         );
     }
@@ -74,6 +79,11 @@ public class AuthController {
             auth.getName(),
             user.getRole().name()
         );
-        return new AuthResponse(token, auth.getName(), user.getRole().name());
+        return new AuthResponse(
+            token,
+            auth.getName(),
+            user.getEmail(),
+            user.getRole().name()
+        );
     }
 }

@@ -7,11 +7,11 @@
 -- 1. USUARIOS DE PRUEBA
 -- Contraseña de todos: "123" (BCrypt hash)
 -- -------------------------------------------
-INSERT INTO app_user (username, password, role)
+INSERT INTO app_user (username, email, password, role)
 VALUES
-    ('admin_user',    '$2a$10$INSVdcU4PuPdMfwLHEa3wOqeoYL9nG9bJChKqANLNKZzOmzIHaxBa', 'ADMIN'),
-    ('customer_user', '$2a$10$INSVdcU4PuPdMfwLHEa3wOqeoYL9nG9bJChKqANLNKZzOmzIHaxBa', 'CUSTOMER'),
-    ('provider_user', '$2a$10$INSVdcU4PuPdMfwLHEa3wOqeoYL9nG9bJChKqANLNKZzOmzIHaxBa', 'PROVIDER');
+    ('admin_user',    'admin@example.com',    '$2a$10$INSVdcU4PuPdMfwLHEa3wOqeoYL9nG9bJChKqANLNKZzOmzIHaxBa', 'ADMIN'),
+    ('customer_user', 'customer@example.com', '$2a$10$INSVdcU4PuPdMfwLHEa3wOqeoYL9nG9bJChKqANLNKZzOmzIHaxBa', 'CUSTOMER'),
+    ('provider_user', 'provider@example.com', '$2a$10$INSVdcU4PuPdMfwLHEa3wOqeoYL9nG9bJChKqANLNKZzOmzIHaxBa', 'PROVIDER');
 
 -- -------------------------------------------
 -- 2. OPCIONES DE MENÚ POR ROL
